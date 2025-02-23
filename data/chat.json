@@ -1,0 +1,20 @@
+[
+  {
+    "id": "initial-message",
+    "text": "Vítejte v chatu! 👋",
+    "author": "System",
+    "timestamp": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "e2fecd60-7d34-4bca-b0a3-b262004d61b0",
+    "text": "test",
+    "author": "Ondřej",
+    "timestamp": "2025-02-23T18:47:33.196Z"
+  },
+  {
+    "id": "253f7b69-7da7-476f-bda5-93636abeff3f",
+    "text": "test",
+    "author": "Veronika",
+    "timestamp": "2025-02-23T18:47:44.387Z"
+  }
+]
