@@ -15,19 +15,21 @@ interface ChatProps {
 export default function Chat({ isVeronika }: ChatProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [newMessage, setNewMessage] = useState('');
+  const [shouldScroll, setShouldScroll] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Initial load of messages
     fetchMessages();
-    // Set up polling for new messages
     const interval = setInterval(fetchMessages, 3000);
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (shouldScroll && chatEndRef.current) {
+      chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      setShouldScroll(false);
+    }
+  }, [messages, shouldScroll]);
 
   const fetchMessages = async () => {
     const response = await fetch('/api/chat');
@@ -40,7 +42,7 @@ export default function Chat({ isVeronika }: ChatProps) {
     if (!newMessage.trim()) return;
 
     const author = isVeronika ? "Veronika" : "Ondřej";
-
+    
     await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -48,16 +50,17 @@ export default function Chat({ isVeronika }: ChatProps) {
     });
 
     setNewMessage('');
+    setShouldScroll(true);
     fetchMessages();
   };
 
   return (
-    <div className="w-full lg:w-80 h-[400px] lg:h-[600px] bg-white/10 backdrop-blur-md rounded-lg flex flex-col">
+    <div className="w-full lg:w-80 h-[400px] lg:h-[600px] bg-white/10 backdrop-blur-md rounded-lg flex flex-col overscroll-none">
       <div className="p-4 border-b border-white/20">
         <h3 className="text-white font-bold">Chat ({isVeronika ? 'Veronika' : 'Ondřej'})</h3>
       </div>
       
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 space-y-4 overscroll-contain">
         {messages.map((msg) => (
           <div key={msg.id} className="bg-white/20 rounded p-3">
             <div className="flex justify-between text-sm">
@@ -67,7 +70,7 @@ export default function Chat({ isVeronika }: ChatProps) {
             <p className="text-white mt-1">{msg.text}</p>
           </div>
         ))}
-        <div ref={chatEndRef} />
+        <div ref={chatEndRef} className="h-0" />
       </div>
 
       <div className="p-4 border-t border-white/20">

@@ -101,10 +101,10 @@ export default function Home() {
   const colors = getMoodColors(moodValue);
 
   return (
-    <div className="relative min-h-screen">
+    <div className="relative min-h-screen overflow-x-hidden">
       <MoodParticles colors={colors} />
       
-      <div className="flex flex-col min-h-screen">
+      <div className="flex flex-col min-h-screen overflow-x-hidden">
         {/* Main content */}
         <main className="flex-1 flex items-center justify-center px-4 py-8">
           <div className="flex flex-col items-center gap-8">
@@ -167,7 +167,7 @@ export default function Home() {
         </main>
 
         {/* Sidebar/Bottom content based on screen size */}
-        <div className="lg:fixed lg:top-8 lg:right-8 lg:flex lg:flex-col lg:gap-8 lg:z-10 p-4 flex flex-col gap-8 lg:p-0">
+        <div className="lg:fixed lg:top-8 lg:right-8 lg:flex lg:flex-col lg:gap-8 lg:z-10 p-4 flex flex-col gap-8 lg:p-0 static">
           <MoodGraph />
           <Chat isVeronika={isVeronika} />
         </div>
