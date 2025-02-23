@@ -104,71 +104,73 @@ export default function Home() {
     <div className="relative min-h-screen">
       <MoodParticles colors={colors} />
       
-      {/* Centered main content */}
-      <main className="absolute inset-0 flex items-center justify-center">
-        <div className="flex flex-col items-center gap-8 p-8">
-          {isLoading ? (
-            <div className="text-white">Načítám Veroničin mood...</div>
-          ) : (
-            <>
-              <div className="text-8xl backdrop-blur-sm p-8 rounded-full bg-white/10">
-                {getEmoji(moodValue)}
-              </div>
-              
-              <h1 className="text-2xl font-bold text-white drop-shadow-lg">
-                Jak se dnes má Veronika?
-              </h1>
+      <div className="flex flex-col min-h-screen">
+        {/* Main content */}
+        <main className="flex-1 flex items-center justify-center px-4 py-8">
+          <div className="flex flex-col items-center gap-8">
+            {isLoading ? (
+              <div className="text-white">Načítám Veroničin mood...</div>
+            ) : (
+              <>
+                <div className="text-8xl backdrop-blur-sm p-8 rounded-full bg-white/10">
+                  {getEmoji(moodValue)}
+                </div>
+                
+                <h1 className="text-2xl font-bold text-white drop-shadow-lg text-center">
+                  Jak se dnes má Veronika?
+                </h1>
 
-              <div className="flex gap-2 items-center">
-                <label htmlFor="isVeronika" className="text-white drop-shadow-lg">
-                  Jsem Veronika:
-                </label>
-                <select 
-                  id="isVeronika" 
-                  value={isVeronika ? "ano" : "ne"}
-                  onChange={(e) => setIsVeronika(e.target.value === "ano")}
-                  className="border rounded p-2 bg-white/80 backdrop-blur-sm"
-                >
-                  <option value="ne">NE</option>
-                  <option value="ano">ANO</option>
-                </select>
-              </div>
+                <div className="flex gap-2 items-center">
+                  <label htmlFor="isVeronika" className="text-white drop-shadow-lg">
+                    Jsem Veronika:
+                  </label>
+                  <select 
+                    id="isVeronika" 
+                    value={isVeronika ? "ano" : "ne"}
+                    onChange={(e) => setIsVeronika(e.target.value === "ano")}
+                    className="border rounded p-2 bg-white/80 backdrop-blur-sm"
+                  >
+                    <option value="ne">NE</option>
+                    <option value="ano">ANO</option>
+                  </select>
+                </div>
 
-              <div className="w-full max-w-md">
-                {isVeronika ? (
-                  <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    value={moodValue}
-                    onChange={(e) => updateMood(Number(e.target.value))}
-                    className="w-full"
-                  />
-                ) : (
-                  <div className="text-center text-white font-bold backdrop-blur-sm bg-black/20 p-4 rounded">
-                    Svůj Mood může upravovat jen Veronika!
+                <div className="w-full max-w-md">
+                  {isVeronika ? (
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={moodValue}
+                      onChange={(e) => updateMood(Number(e.target.value))}
+                      className="w-full"
+                    />
+                  ) : (
+                    <div className="text-center text-white font-bold backdrop-blur-sm bg-black/20 p-4 rounded">
+                      Svůj Mood může upravovat jen Veronika!
+                    </div>
+                  )}
+                </div>
+
+                {quote && (
+                  <div className="max-w-2xl text-center text-white backdrop-blur-sm bg-black/10 p-6 rounded-lg">
+                    <p className="text-lg italic mb-2">{quote.text}</p>
+                    <div className="text-sm opacity-80">
+                      {quote.author}
+                      {quote.book && <span> • {quote.book}</span>}
+                    </div>
                   </div>
                 )}
-              </div>
+              </>
+            )}
+          </div>
+        </main>
 
-              {quote && (
-                <div className="max-w-2xl text-center text-white backdrop-blur-sm bg-black/10 p-6 rounded-lg">
-                  <p className="text-lg italic mb-2">{quote.text}</p>
-                  <div className="text-sm opacity-80">
-                    {quote.author}
-                    {quote.book && <span> • {quote.book}</span>}
-                  </div>
-                </div>
-              )}
-            </>
-          )}
+        {/* Sidebar/Bottom content based on screen size */}
+        <div className="lg:fixed lg:top-8 lg:right-8 lg:flex lg:flex-col lg:gap-8 lg:z-10 p-4 flex flex-col gap-8 lg:p-0">
+          <MoodGraph />
+          <Chat isVeronika={isVeronika} />
         </div>
-      </main>
-
-      {/* Fixed position sidebar elements */}
-      <div className="fixed top-8 right-8 flex flex-col gap-8 z-10">
-        <MoodGraph />
-        <Chat isVeronika={isVeronika} />
       </div>
     </div>
   );

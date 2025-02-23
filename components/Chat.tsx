@@ -52,7 +52,7 @@ export default function Chat({ isVeronika }: ChatProps) {
   };
 
   return (
-    <div className="w-80 h-[600px] bg-white/10 backdrop-blur-md rounded-lg flex flex-col">
+    <div className="w-full lg:w-80 h-[400px] lg:h-[600px] bg-white/10 backdrop-blur-md rounded-lg flex flex-col">
       <div className="p-4 border-b border-white/20">
         <h3 className="text-white font-bold">Chat ({isVeronika ? 'Veronika' : 'Ondřej'})</h3>
       </div>

@@ -66,7 +66,7 @@ export default function MoodGraph() {
           cursor-pointer
           ${isExpanded 
             ? 'fixed inset-4 bg-black/40 z-50'
-            : 'w-80 h-[300px] bg-white/10 hover:scale-105'
+            : 'w-full lg:w-80 h-[300px] bg-white/10 hover:scale-105'
           }
         `}
         onClick={() => setIsExpanded(!isExpanded)}
